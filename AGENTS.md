@@ -28,3 +28,8 @@ use the editor.
   own key and store it in Secrets.
 - **Secrets.** Lovable manages them. Do not put secret values in the repo.
 <!-- LOVABLE:END -->
+
+## Project rules
+- Student exam flow runs entirely through security-definer SQL functions (redeem_pin, get_exam, save_answer, submit_exam); students never get direct table access, so correct answers stay server-side.
+- Students are not auth users: an exam session token in sessionStorage identifies them; admins use Cloud auth with roles in user_roles (first signup becomes admin).
+- src/lib/courses.ts mirrors the seeded courses table (slugs are public URLs); keep both in sync.

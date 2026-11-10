@@ -1,0 +1,34 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1794328243499,
+      "tag": "0000_cbt_portal_schema",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1794328678881,
+      "tag": "0001_seed_content_part1",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1794328748588,
+      "tag": "0002_seed_content_part2",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1794328819036,
+      "tag": "0003_seed_content_part3",
+      "breakpoints": true
+    }
+  ]
+}
