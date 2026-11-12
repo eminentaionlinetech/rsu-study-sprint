@@ -48,7 +48,6 @@ function CourseEntry() {
   const { course } = Route.useLoaderData();
   const navigate = useNavigate();
   const [fullName, setFullName] = useState("");
-  const [matric, setMatric] = useState("");
   const [pin, setPin] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -63,7 +62,7 @@ function CourseEntry() {
     const { data, error: rpcError } = await supabase.rpc("redeem_pin", {
       _pin: pin,
       _full_name: fullName.trim(),
-      _matric: matric.trim(),
+      _matric: "",
       _course_slug: course.slug,
     });
     if (rpcError || !data) {
@@ -138,18 +137,6 @@ function CourseEntry() {
                   onChange={(e) => setFullName(e.target.value)}
                   maxLength={100}
                   required
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="matric">
-                  Matric number <span className="font-normal text-muted-foreground">(optional)</span>
-                </Label>
-                <Input
-                  id="matric"
-                  placeholder="e.g. DE.2025/1234"
-                  value={matric}
-                  onChange={(e) => setMatric(e.target.value)}
-                  maxLength={30}
                 />
               </div>
               <div className="space-y-2">
