@@ -31,5 +31,5 @@ use the editor.
 
 ## Project rules
 - Student exam flow runs entirely through security-definer SQL functions (redeem_pin, get_exam, save_answer, submit_exam); students never get direct table access, so correct answers stay server-side.
-- Students are not auth users: an exam session token in sessionStorage identifies them; admins use Cloud auth with roles in user_roles (first signup becomes admin).
+- Students are not auth users: an exam session token in sessionStorage identifies them; admins use Cloud auth with roles in user_roles; the signup trigger grants admin only to one hard-coded owner email and public signups are disabled, so no other account can become admin.
 - src/lib/courses.ts mirrors the seeded courses table (slugs are public URLs); keep both in sync.

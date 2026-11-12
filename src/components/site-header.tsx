@@ -1,7 +1,31 @@
+import { useQuery } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
 import { GraduationCap } from "lucide-react";
 
+import { supabase } from "@/integrations/supabase/client";
+
+/** True only when the visitor is signed in with an account that holds the admin role. */
+function useViewerIsAdmin() {
+  const { data } = useQuery({
+    queryKey: ["viewer-is-admin"],
+    queryFn: async () => {
+      const { data: sessionData } = await supabase.auth.getSession();
+      const user = sessionData.session?.user;
+      if (!user) return false;
+      const { data: isAdmin, error } = await supabase.rpc("has_role", {
+        _user_id: user.id,
+        _role: "admin",
+      });
+      if (error) return false;
+      return isAdmin === true;
+    },
+    staleTime: 60_000,
+  });
+  return data === true;
+}
+
 export function SiteHeader() {
+  const isAdmin = useViewerIsAdmin();
   return (
     <header className="border-b border-border bg-card/80 backdrop-blur">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:px-6">
@@ -18,12 +42,14 @@ export function SiteHeader() {
             </span>
           </span>
         </Link>
-        <Link
-          to="/admin"
-          className="rounded-md px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
-        >
-          Admin
-        </Link>
+        {isAdmin && (
+          <Link
+            to="/admin"
+            className="rounded-md px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+          >
+            Admin
+          </Link>
+        )}
       </div>
     </header>
   );
